@@ -22,7 +22,36 @@ RSpec.describe "chef show page", type: :feature do
         expect(page).to have_content(dish3.name)
       end
     end
-    it 'has a form to add an existing dish to that chef'
-    it 'lets me fill in the id of a dish and correctly adds it to the chef'
+
+    it 'has a form to add an existing dish to that chef' do
+      visit chef_path(chef)
+      within '#add_dish' do
+        expect(page).to have_content('Add a dish by id:')
+        expect(page).to have_field('dish[id]')
+        expect(page).to have_button('Add Dish')
+      end
+    end
+
+    it 'lets me fill in the id of a dish and correctly adds it to the chef' do
+      chef2 = Chef.create!(name: 'Bad Chef')
+      dish4 = chef2.dishes.create!(name: 'Fajitas', description: 'description goes here')
+
+      visit chef_path(chef)
+
+      within '#dishes' do
+        expect(page).not_to have_content(dish4.name)
+      end
+
+      within '#add_dish' do
+        fill_in 'chef[dish_id]', with: dish4.id
+        click_button('Add Dish')
+      end
+
+      expect(current_path).to eq(chef_path(chef))
+
+      within '#dishes' do
+        expect(page).to have_content(dish4.name)
+      end
+    end
   end
 end

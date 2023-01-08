@@ -4,3 +4,10 @@
     <%= dish.name %>
   <% end %>
 </div>
+<div id='add_dish'>
+  <p>Add a dish by id: <%= form_with model: @chef, local: true do |f| %></p>
+    <%= f.label :dish_id %>
+    <%= f.number_field :dish_id %>
+    <%= f.submit 'Add Dish' %>
+  <% end %>
+</div>
