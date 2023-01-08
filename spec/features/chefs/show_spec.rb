@@ -27,7 +27,7 @@ RSpec.describe 'chef show page', type: :feature do
       visit chef_path(chef)
       within '#add_dish' do
         expect(page).to have_content('Add a dish by id:')
-        expect(page).to have_field('dish[id]')
+        expect(page).to have_field('chef[dish_id]')
         expect(page).to have_button('Add Dish')
       end
     end
