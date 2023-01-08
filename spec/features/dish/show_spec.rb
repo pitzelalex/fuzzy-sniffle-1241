@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "dish/show.html.erb", type: :feature do
-
   let!(:chef) { Chef.create!(name: 'Sir Alex Pitzel') }
   let!(:dish) { chef.dishes.create!(name: 'Pizza', description: 'description goes here') }
   let!(:ingredient1) { Ingredient.create!(name: 'Pepperoni', calories: '300') }
@@ -20,7 +19,6 @@ RSpec.describe "dish/show.html.erb", type: :feature do
     end
 
     it 'displays a list of ingredients for that dish' do
-
       visit dish_path(dish)
 
       within '#ingredients' do
@@ -35,6 +33,10 @@ RSpec.describe "dish/show.html.erb", type: :feature do
 
       expect(page).to have_content('Total Calories: 850')
     end
-    it 'displays the chefs name'
+    it 'displays the chefs name' do
+      visit dish_path(dish)
+
+      expect(page).to have_content('Chef: Sir Alex Pitzel')
+    end
   end
 end
