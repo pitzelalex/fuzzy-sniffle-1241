@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "chef show page", type: :feature do
+RSpec.describe 'chef show page', type: :feature do
   let!(:chef) { Chef.create!(name: 'Sir Alex Pitzel') }
   let!(:dish1) { chef.dishes.create!(name: 'Pizza', description: 'description goes here') }
   let!(:dish2) { chef.dishes.create!(name: 'Wings', description: 'description goes here') }
@@ -52,6 +52,16 @@ RSpec.describe "chef show page", type: :feature do
       within '#dishes' do
         expect(page).to have_content(dish4.name)
       end
+    end
+
+    it 'has a link to visit all ingredients that chef uses' do
+      visit chef_path(chef)
+
+      expect(page).to have_link('All Ingredients', href: chef_ingredients_path(chef))
+
+      click_link('All Ingredients')
+
+      expect(current_path).to eq(chef_ingredients_path(chef))
     end
   end
 end

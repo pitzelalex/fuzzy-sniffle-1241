@@ -1,9 +1,11 @@
 <h2><%= @chef.name %></h2>
+<%= link_to "All Ingredients", chef_ingredients_path(@chef) %>
 <div id='dishes'>
   <% @chef.dishes.each do |dish| %>
     <%= dish.name %>
   <% end %>
 </div>
+
 <div id='add_dish'>
   <p>Add a dish by id: <%= form_with model: @chef, local: true do |f| %></p>
     <%= f.label :dish_id %>
